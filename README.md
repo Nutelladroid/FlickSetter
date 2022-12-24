@@ -2,7 +2,7 @@
 
 ## Description
 
-Script for RLBot which places blue team as dribble attacker and orange as defender. If ball touches ground defender gets a goal.
+Script for RLBot which places blue team as dribble attacker and orange as defender. If ball touches ground defender gets a goal. Based on state setter by Kaiyotech.
 
 ### Requirements
 
