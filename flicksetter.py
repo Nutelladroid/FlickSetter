@@ -79,8 +79,8 @@ class FlickSetter(BaseScript):
                         car_states[p] = car_state
                         # put ball on top of car, slight random perturbations
                         desired_ball_posx = rand_x + rng.uniform(-0, 0)
-                        desired_ball_posy = rand_y + rng.uniform(0, 0) +  10
-                        desired_ball_posz = 150 + rng.uniform(-10, 20)
+                        desired_ball_posy = rand_y + rng.uniform(0, 0) +  12
+                        desired_ball_posz = 150 + rng.uniform(5, 20)
                         ball_state = BallState(Physics(location=Vector3(desired_ball_posx,desired_ball_posy,desired_ball_posz), velocity=Vector3(rand_x_vel, rand_y_vel, 0)))
 						#Team 1 location (defender)
                     elif car.team == 1:
