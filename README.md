@@ -6,11 +6,11 @@ Script for RLBot which places blue team as dribble attacker and orange as defend
 
 ### Requirements
 
--Enable State Setting in Extra and Disable goal reset
+-Enable State Setting in Extra and 
 
 -Have exactly 1v1
 
 
-## Config
-
-### Nothing to configure
+## Optional
+-Disable goal reset
+-Try spike rush bots
