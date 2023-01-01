@@ -76,18 +76,22 @@ class FlickSetter(BaseScript):
                             rand_x = int( rng.uniform(-3000, 3000))
                             rand_y = int(rng.uniform(-2000, 2000))
                             rand_z = 19
-                            rand_x_vel = rng.uniform(-200, 200)
-                            rand_y_vel = rng.uniform(0, 2000)
+                            rand_x_vel = rng.uniform(0, 0)
+                            rand_y_vel = rng.uniform(1000, 1300)
                             desired_car_pos = Vector3(rand_x, rand_y, rand_z)  # x, y, z
-                            desired_yaw = (90 + (rng.uniform(5, 15))) * DegToRad
+                            desired_yaw = (90 + (rng.uniform(-5, 5))) * DegToRad
                             desired_car_vel = [rand_x_vel, rand_y_vel , 0]
                             car_state = CarState(boost_amount=rand.uniform(40, 100),physics=Physics(location=desired_car_pos,rotation=Rotator(yaw=desired_yaw, pitch=0,roll=0), velocity=Vector3(rand_x_vel, rand_y_vel, 0),angular_velocity=Vector3(0, 0, 0)))
                             car_states[p] = car_state
                             # put ball on top of car, slight random perturbations
-                            desired_ball_posx = rand_x + rng.uniform(-10, 10)
-                            desired_ball_posy = rand_y + rng.uniform(-5, 10) +  12
-                            desired_ball_posz = 150 + rng.uniform(5, 20)
-                            ball_state = BallState(Physics(location=Vector3(desired_ball_posx,desired_ball_posy,desired_ball_posz), velocity=Vector3(rand_x_vel, rand_y_vel, 0)))
+                            if rand_x>0:
+                                desired_ball_posx = rand_x + rng.uniform(0, 10)
+                            else:
+                                desired_ball_posx = rand_x + rng.uniform(-10, 0)
+                            
+                            desired_ball_posy = rand_y + rng.uniform(2, 2)
+                            desired_ball_posz = 150 + rng.uniform(12, 12)
+                            ball_state = BallState(Physics(location=Vector3(desired_ball_posx,desired_ball_posy,desired_ball_posz), velocity=Vector3(0, rand_y_vel-0, 0),angular_velocity=Vector3(0, 0, 0)))
                         elif blue_set > 0:
                             desired_car_pos = Vector3(0.0, -4608, 17)
                             car_state = CarState(boost_amount=rand.uniform(0, 0),physics=Physics(location=desired_car_pos,rotation=Rotator(yaw=desired_yaw, pitch=0,roll=0), velocity=Vector3(rand_x_vel, rand_y_vel, 0),angular_velocity=Vector3(0, 0, 0)))
