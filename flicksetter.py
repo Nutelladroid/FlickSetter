@@ -67,18 +67,26 @@ class FlickSetter(BaseScript):
                     rand_x = int( rng.uniform(-3000, 3000))
                     rand_y = int(rng.uniform(-2000, 1500))
                     rand_z = 19
-                    rand_x_vel = rng.uniform(-2, 2) + hard_mode * rng.uniform(-250, 250)
                     
+                    
+                    # Calculate angle between goal and car
+                    angle = np.arctan2(5120 - rand_y, 0 - rand_x)
                     #Sets initial speed of attacker, takes into account if hard mode is enabled and the user defined speeds
-                    rand_y_vel = rng.uniform(min_initial_speed, max_initial_speed)
+                    rand_vel = rng.uniform(min_initial_speed, max_initial_speed)
+                    rand_x_vel = rand_vel * np.cos(angle)
+                    rand_y_vel = rand_vel * np.sin(angle)
                     
                     if hard_mode > 0:
                          rand_y_vel = rng.uniform(500, 2000)
                     
                     desired_car_pos = Vector3(rand_x, rand_y, rand_z)
-                    desired_yaw = (90 + (rng.uniform(-5, 5))) * deg_to_rad+ hard_mode * (rng.uniform(-10, 10)) * deg_to_rad
+                    
+                   
+                    
+                    
+                    desired_yaw = angle + hard_mode * (rng.uniform(-10, 10)) * deg_to_rad #+90
                     desired_car_vel = [rand_x_vel, rand_y_vel , 0]
-                    car_state = CarState(boost_amount=rand.uniform(40, 100),physics=Physics(location=desired_car_pos,rotation=Rotator(yaw=desired_yaw, pitch=0,roll=0), velocity=Vector3(hard_mode*rand_x_vel, rand_y_vel, 0),angular_velocity=Vector3(0, 0, 0)))
+                    car_state = CarState(boost_amount=rand.uniform(40, 100),physics=Physics(location=desired_car_pos,rotation=Rotator(yaw=desired_yaw, pitch=0,roll=0), velocity=Vector3(rand_x_vel, rand_y_vel, 0),angular_velocity=Vector3(0, 0, 0)))
                     # car_states[p] = car_state
                     # put ball on top of car, slight random perturbations
                     # if rand_x<0:
@@ -86,15 +94,17 @@ class FlickSetter(BaseScript):
                     # else:
                         # desired_ball_posx = rand_x + rng.uniform(-20,  10 * hard_mode-10)
                     
-                    desired_ball_posx = rand_x + rng.uniform(-10 , 10)
-                    desired_ball_posy = rand_y  + 2 + hard_mode * rng.uniform(-7, 3)
-                    desired_ball_posz = 100 + 0 + hard_mode * rng.uniform(-22, 7)
+                    desired_ball_posx = rand_x + 15 * np.cos(angle)#+ rand_x//1000 #rng.uniform(-10 , 10)
+                    desired_ball_posy = rand_y  + 15 * np.sin(angle)+ hard_mode * rng.uniform(-7, 3)
+                    desired_ball_posz = 75 + rand_z + hard_mode * rng.uniform(-22, 7)
                     
                     # time.sleep(0.2)
-                    car_states[p]= car_state
+                    # car_states[p]= car_state
                     # car_states[p] = car_state
                     # time.sleep(0.3)
-                    ball_state = BallState(Physics(location=Vector3(desired_ball_posx,desired_ball_posy,desired_ball_posz), velocity=Vector3(hard_mode*rand_x_vel, rand_y_vel, ball_pop*hard_mode),angular_velocity=Vector3(hard_mode* rng.uniform(-2, 2),hard_mode* rng.uniform(-2, 2),hard_mode* rng.uniform(-2, 2))))
+                    ball_state = BallState(Physics(location=Vector3(desired_ball_posx,desired_ball_posy,desired_ball_posz), velocity=Vector3(rand_x_vel, rand_y_vel, ball_pop-hard_mode*ball_pop),angular_velocity=Vector3(hard_mode* rng.uniform(-2, 2),hard_mode* rng.uniform(-2, 2),hard_mode* rng.uniform(-2, 2))))
+                    car_states[p]= car_state
+                   
                 elif blue_set > 0:
                     desired_car_pos = Vector3(0.0, -4608, 17)
                     car_state = CarState(boost_amount=rand.uniform(0, 0),physics=Physics(location=desired_car_pos,rotation=Rotator(yaw=desired_yaw, pitch=0,roll=0), velocity=Vector3(rand_x_vel, rand_y_vel, 0),angular_velocity=Vector3(0, 0, 0)))
